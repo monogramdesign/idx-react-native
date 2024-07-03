@@ -21,9 +21,9 @@
       };
       # Runs when a workspace restarted
       onStart = {
-        # wait-for-device = ''
-        #   adb -s localhost:5554 wait-for-device
-        # '';
+        wait-for-device = ''
+          adb -s localhost:5554 wait-for-device
+        '';
       };
     };
     # Enable previews and customize configuration
