@@ -3,5 +3,8 @@
   "description": "A simple React Native + Expo starter",
   "categories": ["Mobile"],
   "icon": "https://www.gstatic.com/monospace/231115/logo_react-native.svg",
-  "publisher": "Google LLC"
+  "publisher": "Google LLC",
+  "host": {
+    "virtualization": true
+  }
 }
