@@ -4,9 +4,7 @@
   # Which nixpkgs channel to use.
   channel = "stable-23.11"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
-  packages = [
-    
-  ];
+  packages = [];
   # Sets environment variables in the workspace
   env = {};
   idx = {
@@ -23,9 +21,9 @@
       };
       # Runs when a workspace restarted
       onStart = {
-        wait-for-device = ''
-          adb -s localhost:5555 wait-for-device
-        '';
+        # wait-for-device = ''
+        #   adb -s localhost:5554 wait-for-device
+        # '';
       };
     };
     # Enable previews and customize configuration
@@ -37,7 +35,7 @@
           manager = "web";
         };
         android = {
-          command = ["npm" "run" "android" "--" "--port" "5555"];
+          command = ["npm" "run" "android" "--" "--port" "5554"];
           manager = "flutter";
         };
       };
