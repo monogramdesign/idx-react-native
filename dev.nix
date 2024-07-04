@@ -36,7 +36,7 @@
         };
         android = {
           command = ["npm" "run" "android" "--" "--port" "5554"];
-          manager = "android";
+          manager = "web";
         };
       };
     };
