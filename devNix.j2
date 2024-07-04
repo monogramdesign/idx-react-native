@@ -2,25 +2,25 @@
     "npm": {
         "packages": "pkgs.nodejs_20",
         "onCreate": "npm ci --prefer-offline --no-audit --no-progress --timing",
-        "previewWebPrefix": "\"npm\" \"run\" \"web\" \"--\""
+        "previewWebPrefix": "\"npm\" \"run\" \"web\" \"--\"",
         "previewAndroidPrefix": "\"npm\" \"run\" \"android\" \"--\""
     },
     "bun": {
         "packages": "pkgs.bun",
         "onCreate": "bun i",
-        "previewWebPrefix": "\"bun\" \"web\""
+        "previewWebPrefix": "\"bun\" \"web\"",
         "previewAndroidPrefix": "\"bun\" \"android\""
     },
     "pnpm": {
         "packages": "pkgs.nodePackages.pnpm",
         "onCreate": "pnpm i",
-        "previewWebPrefix": "\"pnpm\" \"web\""
+        "previewWebPrefix": "\"pnpm\" \"web\"",
         "previewAndroidPrefix": "\"pnpm\" \"android\""
     },
     "yarn": {
         "packages": "pkgs.yarn",
         "onCreate": "yarn",
-        "previewWebPrefix": "\"yarn\" \"web\""
+        "previewWebPrefix": "\"yarn\" \"web\"",
         "previewAndroidPrefix": "\"yarn\" \"android\""
     },
 }[packageManager]%}
