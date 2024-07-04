@@ -9,16 +9,20 @@
   ];
   bootstrap = ''
     mkdir -p "$WS_NAME"
-    ${
-      if packageManager == "npm" then "npm create expo \"$WS_NAME\" --no-install"
-      else if packageManager == "pnpm" then "pnpm create expo \"$WS_NAME\" --no-install"
-      else if packageManager == "bun" then "bun create expo \"$WS_NAME\" --no-install"
-      else if packageManager == "yarn" then "yarn create expo \"$WS_NAME\" -no-install" 
-      else ""
-    }
+    
+
+    npm create expo "$WS_NAME" --no-install
+    
     mkdir "$WS_NAME/.idx/"
-    packageManager=${packageManager} j2 ${./devNix.j2} -o "$WS_NAME/.idx/dev.nix"
     chmod -R +w "$WS_NAME"
     mv "$WS_NAME" "$out"
   '';
 }
+# ${
+#       if packageManager == "pnpm" then "pnpm create expo \"$WS_NAME\" --no-install"
+#       else if packageManager == "bun" then "bun create expo \"$WS_NAME\" --no-install"
+#       else if packageManager == "yarn" then "yarn create expo \"$WS_NAME\" --no-install" 
+#       else "npm create expo \"$WS_NAME\" --no-install"
+#     }
+
+    # packageManager=${packageManager} j2 ${./devNix.j2} -o "$WS_NAME/.idx/dev.nix"
