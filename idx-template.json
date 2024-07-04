@@ -6,5 +6,20 @@
   "publisher": "Google LLC",
   "host": {
     "virtualization": true
-  }
+  },
+  "params": [
+    {
+      "id": "packageManager",
+      "name": "What package manager do you want to use?",
+      "type": "enum",
+      "default": "npm",
+      "options": {
+        "npm": "npm",
+        "pnpm": "pnpm",
+        "bun": "bun",
+        "yarn": "yarn"
+      },
+      "required": true
+    }
+  ]
 }
