@@ -45,7 +45,7 @@
       };
       # Runs when a workspace restarted
       onStart = {
-        wait-for-device = ''
+        connect-device = ''
           adb -s localhost:5554 wait-for-device
         '';
       };
