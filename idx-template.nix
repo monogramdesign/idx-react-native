@@ -16,9 +16,9 @@
       else "npm create expo \"$WS_NAME\" --no-install"
     }
     mkdir "$WS_NAME/.idx/"
+    packageManager=${packageManager} j2 ${./devNix.j2} -o "$WS_NAME/.idx/dev.nix"
     chmod -R +w "$WS_NAME"
     mv "$WS_NAME" "$out"
   '';
 }
 
-    # packageManager=${packageManager} j2 ${./devNix.j2} -o "$WS_NAME/.idx/dev.nix"
