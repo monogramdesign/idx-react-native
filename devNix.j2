@@ -48,6 +48,9 @@
         connect-device = ''
           adb -s localhost:5554 wait-for-device
         '';
+        start-device = ''
+          {{perPackageManager.previewAndroidPrefix}} --port 5554 --tunnel
+        '';
       };
     };
     # Enable previews and customize configuration
@@ -59,7 +62,8 @@
           manager = "web";
         };
         android = {
-          command = [{{perPackageManager.previewAndroidPrefix}} "--port" "5554"];
+          # noop
+          command = ["tail" "-f" "/dev/null"];
           manager = "web";
         };
       };
