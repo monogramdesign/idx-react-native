@@ -47,6 +47,8 @@
       onCreate = {
         install = "{{perPackageManager.install}}";
         install-ngrok = "{{perPackageManager.installNgrok}}";
+        # Open editors for the following files by default, if they exist:
+        default.openFiles = [ "app/(tabs)/index.tsx" ];
       };
       # Runs when a workspace restarted
       onStart = {
