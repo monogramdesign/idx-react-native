@@ -1,29 +1,25 @@
 {% set perPackageManager = {
     "npm": {
         "packages": "pkgs.nodejs_20",
-        "install": "npm ci --prefer-offline --no-audit --no-progress --timing",
-        "installNgrok": "npm i @expo/ngrok@^4.1.0",
+        "install": "npm ci --prefer-offline --no-audit --no-progress --timing && npm i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"npm\" \"run\" \"web\" \"--\"",
         "previewAndroidPrefix": "\"npm\" \"run\" \"android\" \"--\""
     },
     "bun": {
         "packages": "pkgs.bun",
-        "install": "bun i",
-        "installNgrok": "bun i @expo/ngrok@^4.1.0",
+        "install": "bun i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"bun\" \"web\"",
         "previewAndroidPrefix": "\"bun\" \"android\""
     },
     "pnpm": {
         "packages": "pkgs.nodePackages.pnpm",
-        "install": "pnpm i",
-        "installNgrok": "pnpm add @expo/ngrok@^4.1.0",
+        "install": "pnpm add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"pnpm\" \"web\"",
         "previewAndroidPrefix": "\"pnpm\" \"android\""
     },
     "yarn": {
         "packages": "pkgs.yarn",
-        "install": "yarn",
-        "installNgrok": "yarn add @expo/ngrok@^4.1.0",
+        "install": "yarn && yarn add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"yarn\" \"web\"",
         "previewAndroidPrefix": "\"yarn\" \"android\""
     },
@@ -46,16 +42,13 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         install = "{{perPackageManager.install}}";
-        install-ngrok = "{{perPackageManager.installNgrok}}";
-        # Open editors for the following files by default, if they exist:
-        default.openFiles = [ "app/(tabs)/index.tsx" ];
       };
       # Runs when a workspace restarted
       onStart = {
         connect-device = ''
           adb -s localhost:5554 wait-for-device
         '';
-        start-device = ''
+        start = ''
           {{perPackageManager.previewAndroidPrefix}} --port 5554 --tunnel
         '';
       };
