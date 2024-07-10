@@ -1,23 +1,23 @@
 {% set perPackageManager = {
   "npm": {
     "packages": "pkgs.nodejs_20",
-    "resetProject": "\"npm\" \"run\" \"reset-project\"",
-    "previewAndroid": "\"npm\" \"run\" \"android\" \"--\" \"--tunnel\""
+    "resetProject": "npm run reset-project",
+    "previewAndroid": "npm run android -- --tunnel"
   },
   "bun": {
     "packages": "pkgs.bun",
-    "resetProject": "\"bun\" \"reset-project\"",
-    "previewAndroid": "\"bun\" \"android\" \"--tunnel\""
+    "resetProject": "bun reset-project",
+    "previewAndroid": "bun android --tunnel"
   },
   "pnpm": {
     "packages": "pkgs.nodePackages.pnpm",
-    "resetProject": "\"pnpm\" \"reset-project\"",
-    "previewAndroid": "\"pnpm\" \"android\" \"--tunnel\""
+    "resetProject": "pnpm reset-project",
+    "previewAndroid": "pnpm android --tunnel"
   },
   "yarn": {
     "packages": "pkgs.yarn",
-    "resetProject": "\"yarn\" \"reset-project\"",
-    "previewAndroid": "\"yarn\" \"android\" \"--tunnel\""
+    "resetProject": "yarn reset-project",
+    "previewAndroid": "yarn android --tunnel"
   },
 }[packageManager]%}
 {# Edited for use in IDX on 07/09/12 #}
@@ -29,7 +29,11 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 #### Android
 
-Android previews are defined in the workspace's onStart hook and started as vscode tasks when the workspace is opened.
+Android previews are defined in the workspace's onStart hook and started as a vscode task when the workspace is opened/started.
+
+Note, if you can't find the task where you can input these options, either:
+- Rebuild the environment (using command palette: `IDX: Rebuild Environment`), or
+- Run `{{perPackageManager.previewAndroid}}` command manually run android and see the output in your terminal. The device should pick up this new command and switch to start displaying the output from it.
 
 In the output, you'll find options to open the app in a
 
@@ -39,10 +43,6 @@ In the output, you'll find options to open the app in a
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You'll also find options to open the app's developer menu, reload the app, and more.
-
-If you can't find the output of the task where you can input these options, either:
-- Rebuild the environment (using command palette: `IDX: Rebuild Environment`), or
-- Run `{{perPackageManager.previewAndroid}}` command manually run android and see the output in your terminal. The device should pick up this new command and switch to start displaying the output from it.
 
 #### Web
 
