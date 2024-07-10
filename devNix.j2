@@ -62,7 +62,8 @@
           manager = "web";
         };
         android = {
-          command = [{{perPackageManager.previewAndroidPrefix}} "--port" "5554" "--tunnel"];
+          # noop
+          command = ["tail" "-f" "/dev/null"];
           manager = "web";
         };
       };
