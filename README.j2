@@ -19,8 +19,8 @@
     "resetProject": "yarn reset-project",
     "previewAndroid": "yarn android --tunnel"
   },
-}[packageManager]%}
-{# Edited for use in IDX on 07/09/12 #}
+}[packageManager]%}> Edited for use in IDX on 07/09/12
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
@@ -31,11 +31,11 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 Android previews are defined as a `workspace.onStart` hook and started as a vscode task when the workspace is opened/started.
 
-Note, if you can't find the task where you can input these options, either:
+Note, if you can't find the task, either:
 - Rebuild the environment (using command palette: `IDX: Rebuild Environment`), or
 - Run `{{perPackageManager.previewAndroid}}` command manually run android and see the output in your terminal. The device should pick up this new command and switch to start displaying the output from it.
 
-In the output, you'll find options to open the app in a
+In the output of this command/task, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)

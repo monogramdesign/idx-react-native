@@ -3,28 +3,27 @@
         "packages": "pkgs.nodejs_20",
         "install": "npm ci --prefer-offline --no-audit --no-progress --timing && npm i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"npm\" \"run\" \"web\" \"--\"",
-        "previewAndroidPrefix": "\"npm\" \"run\" \"android\" \"--\""
+        "previewAndroidPrefix": "npm run android --"
     },
     "bun": {
         "packages": "pkgs.bun",
         "install": "bun i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"bun\" \"web\"",
-        "previewAndroidPrefix": "\"bun\" \"android\""
+        "previewAndroidPrefix": "bun android"
     },
     "pnpm": {
         "packages": "pkgs.nodePackages.pnpm",
         "install": "pnpm add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"pnpm\" \"web\"",
-        "previewAndroidPrefix": "\"pnpm\" \"android\""
+        "previewAndroidPrefix": "pnpm android"
     },
     "yarn": {
         "packages": "pkgs.yarn",
         "install": "yarn && yarn add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"yarn\" \"web\"",
-        "previewAndroidPrefix": "\"yarn\" \"android\""
+        "previewAndroidPrefix": "yarn android"
     },
-}[packageManager]%}
-# To learn more about how to use Nix to configure your environment
+}[packageManager]%}# To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
 { pkgs, ... }: {
   # Which nixpkgs channel to use.
