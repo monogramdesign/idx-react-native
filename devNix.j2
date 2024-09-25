@@ -50,8 +50,7 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         {% if openIn == "development" %}
-        install = "npm ci --prefer-offline --no-audit --no-progress --timing && npx expo install -y expo-dev-client";
-        prebuild = "{{perPackageManager.devPrebuild}}";
+        install-and-prebuild = "npm ci --prefer-offline --no-audit --no-progress --timing && npx expo install -y expo-dev-client && {{perPackageManager.devPrebuild}}";
         {% else %}
         install = "{{perPackageManager.install}}";
         {% endif %}
@@ -64,11 +63,11 @@
         '';
         {% endif %}
         connect-device = ''
-          adb -s localhost:5554 wait-for-device
+          adb -s localhost:5554 wait-for-device 
         '';
         android = ''
           {% if openIn == "development" %}
-          {{packageManager}} run android
+          {{packageManager}} run android --no-bundler
           {% else %}
           {{perPackageManager.previewAndroidPrefix}} --port 5554 --tunnel
           {% endif %}
