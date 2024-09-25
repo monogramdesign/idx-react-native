@@ -50,7 +50,7 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         {% if openIn == "development" %}
-        install = "{{packageManager}} ci --prefer-offline --no-audit --no-progress --timing && npx expo install -y expo-dev-client";
+        install = "npm ci --prefer-offline --no-audit --no-progress --timing && npx expo install -y expo-dev-client";
         prebuild = "{{perPackageManager.devPrebuild}}";
         {% else %}
         install = "{{perPackageManager.install}}";
