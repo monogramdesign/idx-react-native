@@ -71,7 +71,7 @@
         '';
         android = ''
           {% if openIn == "development" %}
-          {{packageManager}} run android --no-bundler
+          {{packageManager}} run android
           {% else %}
           {{perPackageManager.previewAndroidPrefix}} --port 5554 --tunnel
           {% endif %}
