@@ -50,7 +50,7 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         {% if openIn == "development" %}
-        install-and-prebuild = "{{perPackageManager.install}} && npx expo install -y expo-dev-client && npx -y expo prebuild --platform android";
+        install-and-prebuild = "{{perPackageManager.install}} && npx -y expo install expo-dev-client && npx -y expo prebuild --platform android";
         {% else %}
         install = "{{perPackageManager.install}}";
         {% endif %}
