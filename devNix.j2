@@ -53,7 +53,7 @@
         install-and-prebuild = ''
           {{perPackageManager.install}} && {{perPackageManager.installDevClient}} && npx -y expo prebuild --platform android
           # Add more memory to the JVM
-          sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m/org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m/' "android/gradle.properties"
+          sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m/org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m/' "android/gradle.properties"
         '';
         {% else %}
         install = "{{perPackageManager.install}}";
