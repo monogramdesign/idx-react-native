@@ -3,25 +3,29 @@
         "packages": "pkgs.nodejs_20",
         "install": "npm ci --prefer-offline --no-audit --no-progress --timing && npm i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"npm\" \"run\" \"web\" \"--\"",
-        "previewAndroidPrefix": "npm run android --"
+        "previewAndroidPrefix": "npm run android --",
+        "devPrebuild": "npx -y expo prebuild"
     },
     "bun": {
         "packages": "pkgs.bun",
         "install": "bun i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"bun\" \"web\"",
-        "previewAndroidPrefix": "bun android"
+        "previewAndroidPrefix": "bun android",
+        "devPrebuild": "bunx expo prebuild"
     },
     "pnpm": {
         "packages": "pkgs.nodePackages.pnpm",
         "install": "pnpm add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"pnpm\" \"web\"",
-        "previewAndroidPrefix": "pnpm android"
+        "previewAndroidPrefix": "pnpm android",
+        "devPrebuild": "pnpx expo prebuild"
     },
     "yarn": {
         "packages": "pkgs.yarn",
         "install": "yarn && yarn add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"yarn\" \"web\"",
-        "previewAndroidPrefix": "yarn android"
+        "previewAndroidPrefix": "yarn android",
+        "devPrebuild": "yarn dlx expo prebuild"
     },
 }[packageManager]%}# To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
@@ -46,8 +50,8 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         {% if openIn == "development" %}
-        install = "{{packageManager}} ci --prefer-offline --no-audit --no-progress --timing && npx expo install expo-dev-client";
-        prebuild = "npx expo prebuild";
+        install = "{{packageManager}} ci --prefer-offline --no-audit --no-progress --timing && npx expo install -y expo-dev-client";
+        prebuild = "{{perPackageManager.devPrebuild}}";
         {% else %}
         install = "{{perPackageManager.install}}";
         {% endif %}
