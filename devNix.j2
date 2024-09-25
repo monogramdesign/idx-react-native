@@ -3,25 +3,29 @@
         "packages": "pkgs.nodejs_20",
         "install": "npm ci --prefer-offline --no-audit --no-progress --timing && npm i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"npm\" \"run\" \"web\" \"--\"",
-        "previewAndroidPrefix": "npm run android --"
+        "previewAndroidPrefix": "npm run android --",
+        "installDevClient": "npx -y expo install expo-dev-client"
     },
     "bun": {
         "packages": "pkgs.bun",
         "install": "bun i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"bun\" \"web\"",
-        "previewAndroidPrefix": "bun android"
+        "previewAndroidPrefix": "bun android",
+        "installDevClient": "bunx expo install expo-dev-client"
     },
     "pnpm": {
         "packages": "pkgs.nodePackages.pnpm",
         "install": "pnpm add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"pnpm\" \"web\"",
-        "previewAndroidPrefix": "pnpm android"
+        "previewAndroidPrefix": "pnpm android",
+        "installDevClient": "pnpx expo install expo-dev-client"
     },
     "yarn": {
         "packages": "pkgs.yarn",
         "install": "yarn && yarn add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"yarn\" \"web\"",
-        "previewAndroidPrefix": "yarn android"
+        "previewAndroidPrefix": "yarn android",
+        "installDevClient": "yarn dlx expo install expo-dev-client"
     },
 }[packageManager]%}# To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
@@ -29,7 +33,7 @@
   # Which nixpkgs channel to use.
   channel = "stable-23.11"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
-  packages = [{{perPackageManager.packages}}];
+  packages = {% if openIn == "development" %}[{{perPackageManager.packages}} pkgs.nodejs_20 pkgs.jdk21_headless pkgs.gradle pkgs.socat]{% else %}[{{perPackageManager.packages}}]{% endif %};
   # Sets environment variables in the workspace
   env = {
     EXPO_USE_FAST_RESOLVER = 1; 
@@ -38,19 +42,39 @@
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       "msjsdiag.vscode-react-native"
+      {% if openIn == "development" %}
+      "fwcd.kotlin"
+      {% endif %}
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
+        {% if openIn == "development" %}
+        install-and-prebuild = ''
+          {{perPackageManager.install}} && {{perPackageManager.installDevClient}} && npx -y expo prebuild --platform android
+          # Add more memory to the JVM
+          sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m/org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m/' "android/gradle.properties"
+        '';
+        {% else %}
         install = "{{perPackageManager.install}}";
+        {% endif %}
       };
       # Runs when a workspace restarted
       onStart = {
+        {% if openIn == "development" %}
+        forward-ports = ''
+          socat -d -d TCP-LISTEN:5554,reuseaddr,fork TCP:$(cat /etc/resolv.conf | tail -n1 | cut -d " " -f 2):5554
+        '';
+        {% endif %}
         connect-device = ''
-          adb -s localhost:5554 wait-for-device
+          adb -s localhost:5554 wait-for-device 
         '';
         android = ''
+          {% if openIn == "development" %}
+          {{packageManager}} run android
+          {% else %}
           {{perPackageManager.previewAndroidPrefix}} --port 5554 --tunnel
+          {% endif %}
         '';
       };
     };

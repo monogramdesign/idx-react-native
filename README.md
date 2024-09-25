@@ -1,4 +1,4 @@
-<a href="https://idx.google.com/new?template=https%3A%2F%2Fgithub.com%2Fmonogramdesign%2Fidx-react-native">
+<a href="https://idx.google.com/new?template=https%3A%2F%2Fgithub.com%2Fmonogramdesign%2Fidx-react-native-dev-build">
   <picture>
     <source
       media="(prefers-color-scheme: dark)"
