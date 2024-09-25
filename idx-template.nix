@@ -20,7 +20,13 @@
     packageManager=${packageManager} openIn=${openIn} j2 ${./devNix.j2} -o "$WS_NAME/.idx/dev.nix"
     packageManager=${packageManager} openIn=${openIn} j2 ${./README.j2} -o "$WS_NAME/README.md"
 
-    ${if openIn == "development" then "jq '.expo.android.package = \"com.anonymous.\" + env.WS_NAME' \"$WS_NAME/app.json\" > \"$WS_NAME/app.json.tmp\" && mv \"$WS_NAME/app.json.tmp\" \"$WS_NAME/app.json\"" else ""}
+    ${if openIn == "development" then ''
+      # Add android package name
+      jq '.expo.android.package = "com.anonymous." + env.WS_NAME' "$WS_NAME/app.json" > "$WS_NAME/app.json.tmp" && mv "$WS_NAME/app.json.tmp" "$WS_NAME/app.json"
+
+      # Add more memory to the JVM
+      sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m/org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m/' "$WS_NAME/android/gradle.properties"
+    '' else ""}
   
     chmod -R +w "$WS_NAME"
     mv "$WS_NAME" "$out"
