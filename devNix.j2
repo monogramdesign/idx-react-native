@@ -50,7 +50,11 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         {% if openIn == "development" %}
-        install-and-prebuild = "{{perPackageManager.install}} && {{perPackageManager.installDevClient}} && npx -y expo prebuild --platform android";
+        install-and-prebuild = ''
+          {{perPackageManager.install}} && {{perPackageManager.installDevClient}} && npx -y expo prebuild --platform android
+          # Add more memory to the JVM
+          sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m/org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m/' "$WS_NAME/android/gradle.properties"
+        '';
         {% else %}
         install = "{{perPackageManager.install}}";
         {% endif %}
