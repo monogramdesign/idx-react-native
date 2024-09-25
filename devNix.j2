@@ -29,7 +29,7 @@
   # Which nixpkgs channel to use.
   channel = "stable-23.11"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
-  packages = {% if openIn == "development" %}[pkgs.nodejs_20 pkgs.jdk21_headless pkgs.gradle pkgs.socat]{% else %}[{{perPackageManager.packages}}]{% endif %};
+  packages = {% if openIn == "development" %}[{{perPackageManager.packages}} pkgs.nodejs_20 pkgs.jdk21_headless pkgs.gradle pkgs.socat]{% else %}[{{perPackageManager.packages}}]{% endif %};
   # Sets environment variables in the workspace
   env = {
     EXPO_USE_FAST_RESOLVER = 1; 
