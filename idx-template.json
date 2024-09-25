@@ -20,6 +20,17 @@
         "yarn": "yarn"
       },
       "required": true
+    },
+    {
+      "id": "openIn",
+      "name": "How would you like to open the app?",
+      "type": "enum",
+      "default": "go",
+      "options": {
+        "go": "Expo Go (allows you to run the app on your phone)",
+        "development": "Development Build (allows you to write your own native code, and more)"
+      },
+      "required": true
     }
   ]
 }

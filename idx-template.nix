@@ -1,4 +1,4 @@
-{ pkgs, packageManager ? "npm", ... }: {
+{ pkgs, packageManager ? "npm", openIn ? "go", ... }: {
   packages = [
     pkgs.nodejs_20
     pkgs.yarn
@@ -6,6 +6,7 @@
     pkgs.bun
     pkgs.j2cli
     pkgs.nixfmt
+    pkgs.jq
   ];
   bootstrap = ''
     mkdir -p "$WS_NAME"
@@ -16,8 +17,11 @@
       else "npm create expo \"$WS_NAME\" --no-install"
     }
     mkdir "$WS_NAME/.idx/"
-    packageManager=${packageManager} j2 ${./devNix.j2} -o "$WS_NAME/.idx/dev.nix"
-    packageManager=${packageManager} j2 ${./README.j2} -o "$WS_NAME/README.md"
+    packageManager=${packageManager} openIn=${openIn} j2 ${./devNix.j2} -o "$WS_NAME/.idx/dev.nix"
+    packageManager=${packageManager} openIn=${openIn} j2 ${./README.j2} -o "$WS_NAME/README.md"
+
+    ${if openIn == "development" then "jq '.expo.android.package = \"com.anonymous.\" + env.WS_NAME' \"$WS_NAME/app.json\" > \"$WS_NAME/app.json.tmp\" && mv \"$WS_NAME/app.json.tmp\" \"$WS_NAME/app.json\"" else ""}
+  
     chmod -R +w "$WS_NAME"
     mv "$WS_NAME" "$out"
   '';

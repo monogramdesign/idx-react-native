@@ -29,7 +29,7 @@
   # Which nixpkgs channel to use.
   channel = "stable-23.11"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
-  packages = [{{perPackageManager.packages}}];
+  packages = {% if openIn == "development" %}[pkgs.nodejs_20 pkgs.jdk21_headless pkgs.gradle pkgs.socat]{% else %}[{{perPackageManager.packages}}]{% endif %};
   # Sets environment variables in the workspace
   env = {
     EXPO_USE_FAST_RESOLVER = 1; 
@@ -38,19 +38,36 @@
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       "msjsdiag.vscode-react-native"
+      {% if openIn == "development" %}
+      "fwcd.kotlin"
+      {% endif %}
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
+        {% if openIn == "development" %}
+        install = "{{packageManager}} ci --prefer-offline --no-audit --no-progress --timing && npx expo install expo-dev-client";
+        prebuild = "npx expo prebuild";
+        {% else %}
         install = "{{perPackageManager.install}}";
+        {% endif %}
       };
       # Runs when a workspace restarted
       onStart = {
+        {% if openIn == "development" %}
+        forward-ports = ''
+          socat -d -d TCP-LISTEN:5554,reuseaddr,fork TCP:$(cat /etc/resolv.conf | tail -n1 | cut -d " " -f 2):5554
+        '';
+        {% endif %}
         connect-device = ''
           adb -s localhost:5554 wait-for-device
         '';
         android = ''
+          {% if openIn == "development" %}
+          {{packageManager}} run android
+          {% else %}
           {{perPackageManager.previewAndroidPrefix}} --port 5554 --tunnel
+          {% endif %}
         '';
       };
     };
