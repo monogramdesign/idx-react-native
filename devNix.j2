@@ -4,7 +4,7 @@
         "install": "npm ci --prefer-offline --no-audit --no-progress --timing && npm i @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"npm\" \"run\" \"web\" \"--\"",
         "previewAndroidPrefix": "npm run android --",
-        "devPrebuild": "npx -y expo prebuild"
+        "devPrebuild": "npx -y expo prebuild --platform android"
     },
     "bun": {
         "packages": "pkgs.bun",
@@ -25,7 +25,7 @@
         "install": "yarn && yarn add @expo/ngrok@^4.1.0",
         "previewWebPrefix": "\"yarn\" \"web\"",
         "previewAndroidPrefix": "yarn android",
-        "devPrebuild": "yarn dlx expo prebuild"
+        "devPrebuild": "yarn dlx expo prebuild --platform android"
     },
 }[packageManager]%}# To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
@@ -50,7 +50,7 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         {% if openIn == "development" %}
-        install-and-prebuild = "npm ci --prefer-offline --no-audit --no-progress --timing && npx expo install -y expo-dev-client && {{perPackageManager.devPrebuild}}";
+        install-and-prebuild = "{{perPackageManager.install}} && npx expo install -y expo-dev-client && npx -y expo prebuild --platform android";
         {% else %}
         install = "{{perPackageManager.install}}";
         {% endif %}
