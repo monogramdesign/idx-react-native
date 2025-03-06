@@ -61,14 +61,13 @@
       };
       # Runs when a workspace restarted
       onStart = {
-        connect-device = ''
-          adb -s localhost:5554 wait-for-device 
-        '';
-        android = ''
+         android = ''
+          # Wait for the device connection command to finish
+          adb -s emulator-5554 wait-for-device && \
           {% if openIn == "development" %}
           {{packageManager}} run android
           {% else %}
-          {{perPackageManager.previewAndroidPrefix}} --tunnel
+          {{perPackageManager.previewAndroidPrefix}} --port 5555 --tunnel
           {% endif %}
         '';
       };
