@@ -68,7 +68,7 @@
           {% if openIn == "development" %}
           {{packageManager}} run android
           {% else %}
-          {{perPackageManager.previewAndroidPrefix}} --port 5554 --tunnel
+          {{perPackageManager.previewAndroidPrefix}} --tunnel
           {% endif %}
         '';
       };
