@@ -1,28 +1,28 @@
 {% set perPackageManager = {
     "npm": {
         "packages": "pkgs.nodejs_20",
-        "install": "npm ci --prefer-offline --no-audit --no-progress --timing && npm i @expo/ngrok@^4.1.0",
+        "install": "npm ci --prefer-offline --no-audit --no-progress --timing && npm i @expo/ngrok@^4.1.0 react@latest react-dom@latest react-native@latest && npm i -D @types/react@latest",
         "previewWebPrefix": "\"npm\" \"run\" \"web\" \"--\"",
         "previewAndroidPrefix": "npm run android --",
         "installDevClient": "npx -y expo install expo-dev-client"
     },
     "bun": {
         "packages": "pkgs.bun",
-        "install": "bun i @expo/ngrok@^4.1.0",
+        "install": "bun i @expo/ngrok@^4.1.0 react@latest react-dom@latest react-native@latest && npm i -D @types/react@latest",
         "previewWebPrefix": "\"bun\" \"web\"",
         "previewAndroidPrefix": "bun android",
         "installDevClient": "bunx expo install expo-dev-client"
     },
     "pnpm": {
         "packages": "pkgs.nodePackages.pnpm",
-        "install": "pnpm add @expo/ngrok@^4.1.0",
+        "install": "pnpm add @expo/ngrok@^4.1.0 react@latest react-dom@latest react-native@latest && npm i -D @types/react@latest",
         "previewWebPrefix": "\"pnpm\" \"web\"",
         "previewAndroidPrefix": "pnpm android",
         "installDevClient": "pnpx expo install expo-dev-client"
     },
     "yarn": {
         "packages": "pkgs.yarn",
-        "install": "yarn && yarn add @expo/ngrok@^4.1.0",
+        "install": "yarn && yarn add @expo/ngrok@^4.1.0 react@latest react-dom@latest react-native@latest && npm i -D @types/react@latest",
         "previewWebPrefix": "\"yarn\" \"web\"",
         "previewAndroidPrefix": "yarn android",
         "installDevClient": "yarn dlx expo install expo-dev-client"
